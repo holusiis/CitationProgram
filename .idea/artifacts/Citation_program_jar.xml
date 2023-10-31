@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Citation program:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Citation_program_jar</output-path>
+    <root id="archive" name="Citation program.jar">
+      <element id="module-output" name="Citation program" />
+    </root>
+  </artifact>
+</component>
