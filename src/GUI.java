@@ -23,6 +23,7 @@ public class GUI extends JFrame {
     JButton btnCreate = new JButton("Vytvořit citaci");
     public GUI() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setTitle("Citační Program - Geografie");
         this.setPreferredSize(new Dimension(600, 250));
 
         centerPanel.add(lbSurname);
