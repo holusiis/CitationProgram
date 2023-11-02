@@ -1,22 +1,19 @@
+import net.miginfocom.swing.MigLayout;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
-public class GUI_Book extends JFrame {
-    JPanel mainPanel = new JPanel(new BorderLayout());
-    JPanel centerPanel = new JPanel();
-    JPanel bottomPanel = new JPanel();
-    JPanel leftPanel = new JPanel();
-    JPanel rightPanel = new JPanel();
+public class GUI extends JFrame {
+    JPanel centerPanel = new JPanel(new MigLayout());
     JLabel lbSurname = new JLabel("Příjmení:");
     JLabel lbName = new JLabel("Jméno:");
     JLabel lbYear = new JLabel("Rok vydání:");
     JLabel lbNameOfBook = new JLabel("Název knihy:");
     JLabel lbPublisher = new JLabel("Vydavatel:");
     JLabel lbCity = new JLabel("Město vydání:");
-    JLabel lbTop = new JLabel("Citace pro knihy - Geografie");
-    JTextField txtSurname = new JTextField();
+    JTextField txtSurname = new JTextField(80);
     JTextField txtName = new JTextField();
     JTextField txtYear = new JTextField();
     JTextField txtNameOfBook = new JTextField();
@@ -24,36 +21,25 @@ public class GUI_Book extends JFrame {
     JTextField txtCity = new JTextField();
     JTextField txtCitation = new JTextField();
     JButton btnCreate = new JButton("Vytvořit citaci");
-    public GUI_Book() {
+    public GUI() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setPreferredSize(new Dimension(800, 400));
-        this.pack();
-
-        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-        mainPanel.add(centerPanel, BorderLayout.CENTER);
-        mainPanel.add(txtCitation, BorderLayout.SOUTH);
-        mainPanel.add(leftPanel, BorderLayout.WEST);
-        mainPanel.add(rightPanel, BorderLayout.EAST);
-        mainPanel.add(lbTop, BorderLayout.NORTH);
-        lbTop.setHorizontalAlignment(SwingConstants.CENTER);
-        txtCitation.setPreferredSize(new Dimension(800, 30));
-        txtCitation.setEditable(false);
+        this.setPreferredSize(new Dimension(600, 250));
 
         centerPanel.add(lbSurname);
-        centerPanel.add(txtSurname);
+        centerPanel.add(txtSurname, "wrap, span, grow");
         centerPanel.add(lbName);
-        centerPanel.add(txtName);
+        centerPanel.add(txtName, "wrap, span, grow");
         centerPanel.add(lbYear);
-        centerPanel.add(txtYear);
+        centerPanel.add(txtYear, "wrap, span, grow");
         centerPanel.add(lbNameOfBook);
-        centerPanel.add(txtNameOfBook);
+        centerPanel.add(txtNameOfBook, "wrap, span, grow");
         centerPanel.add(lbPublisher);
-        centerPanel.add(txtPublisher);
+        centerPanel.add(txtPublisher, "wrap, span, grow");
         centerPanel.add(lbCity);
-        centerPanel.add(txtCity);
-        centerPanel.add(bottomPanel);
+        centerPanel.add(txtCity, "wrap, span, grow");
+        centerPanel.add(btnCreate);
+        centerPanel.add(txtCitation, "span, grow");
 
-        bottomPanel.add(btnCreate);
         btnCreate.addActionListener(e -> {
             //Citation creation
             String citation = StringCreation.createBook(txtSurname.getText(), txtName.getText(),
@@ -67,6 +53,7 @@ public class GUI_Book extends JFrame {
             JOptionPane.showMessageDialog(null, "Citace vytvořena a zkopírována do schránky");
         });
 
-        this.setContentPane(mainPanel);
+        this.pack();
+        this.setContentPane(centerPanel);
     }
 }
