@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
-public class GUI extends JFrame {
+public class GUI_Book extends JFrame {
     JPanel mainPanel = new JPanel(new BorderLayout());
     JPanel centerPanel = new JPanel();
     JPanel bottomPanel = new JPanel();
@@ -16,15 +16,15 @@ public class GUI extends JFrame {
     JLabel lbPublisher = new JLabel("Vydavatel:", SwingConstants.LEFT);
     JLabel lbCity = new JLabel("Město vydání:", SwingConstants.LEFT);
     JLabel lbTop = new JLabel("Citace pro knihy - Geografie");
-    JTextField txtSurname = new JTextField("");
-    JTextField txtName = new JTextField("");
-    JTextField txtYear = new JTextField("");
-    JTextField txtNameOfBook = new JTextField("");
-    JTextField txtPublisher = new JTextField("");
-    JTextField txtCity = new JTextField("");
-    JTextField txtCitation = new JTextField("");
+    JTextField txtSurname = new JTextField();
+    JTextField txtName = new JTextField();
+    JTextField txtYear = new JTextField();
+    JTextField txtNameOfBook = new JTextField();
+    JTextField txtPublisher = new JTextField();
+    JTextField txtCity = new JTextField();
+    JTextField txtCitation = new JTextField();
     JButton btnCreate = new JButton("Vytvořit citaci");
-    public GUI() {
+    public GUI_Book() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setPreferredSize(new Dimension(800, 400));
         this.pack();
@@ -55,9 +55,12 @@ public class GUI extends JFrame {
 
         bottomPanel.add(btnCreate);
         btnCreate.addActionListener(e -> {
-            String citation = StringCreation.create(txtSurname.getText(), txtName.getText(),
+            //Citation creation
+            String citation = StringCreation.createBook(txtSurname.getText(), txtName.getText(),
                     txtYear.getText(), txtNameOfBook.getText(), txtPublisher.getText(), txtCity.getText());
             txtCitation.setText(citation);
+
+            //Copy to clipboard
             Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
             StringSelection clipboardContent = new StringSelection(citation);
             clip.setContents(clipboardContent, clipboardContent);
