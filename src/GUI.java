@@ -1,3 +1,4 @@
+import com.formdev.flatlaf.FlatDarkLaf;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -6,7 +7,20 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
 public class GUI extends JFrame {
-    JPanel centerPanel = new JPanel(new MigLayout());
+    //private static int whichCitation = 0;
+    public static void initialize() {
+        FlatDarkLaf.setup();
+        JFrame gui = new GUI();
+        gui.setVisible(true);
+    }
+    public static void copyToClipboard(String whatToCopy) {
+        Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
+        StringSelection clipboardContent = new StringSelection(whatToCopy);
+        clip.setContents(clipboardContent, clipboardContent);
+        JOptionPane.showMessageDialog(null, "Citace vytvořena a zkopírována do schránky");
+    }
+    JPanel bookPanel = new JPanel(new MigLayout());
+    //JPanel magazinePanel= new JPanel(new MigLayout("debug"));
     JLabel lbSurname = new JLabel("Příjmení:");
     JLabel lbName = new JLabel("Jméno:");
     JLabel lbYear = new JLabel("Rok vydání:");
@@ -21,40 +35,45 @@ public class GUI extends JFrame {
     JTextField txtCity = new JTextField();
     JTextField txtCitation = new JTextField();
     JButton btnCreate = new JButton("Vytvořit citaci");
+    JButton btnMagazine = new JButton("Časopis");
     public GUI() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Citační Program - Geografie");
-        this.setPreferredSize(new Dimension(600, 250));
+        this.setPreferredSize(new Dimension(600, 280));
 
-        centerPanel.add(lbSurname);
-        centerPanel.add(txtSurname, "wrap, span, grow");
-        centerPanel.add(lbName);
-        centerPanel.add(txtName, "wrap, span, grow");
-        centerPanel.add(lbYear);
-        centerPanel.add(txtYear, "wrap, span, grow");
-        centerPanel.add(lbNameOfBook);
-        centerPanel.add(txtNameOfBook, "wrap, span, grow");
-        centerPanel.add(lbPublisher);
-        centerPanel.add(txtPublisher, "wrap, span, grow");
-        centerPanel.add(lbCity);
-        centerPanel.add(txtCity, "wrap, span, grow");
-        centerPanel.add(btnCreate);
-        centerPanel.add(txtCitation, "span, grow");
+        //Layout for bookPanel
+        bookPanel.add(lbSurname);
+        bookPanel.add(txtSurname, "wrap, span, grow");
+        bookPanel.add(lbName);
+        bookPanel.add(txtName, "wrap, span, grow");
+        bookPanel.add(lbYear);
+        bookPanel.add(txtYear, "wrap, span, grow");
+        bookPanel.add(lbNameOfBook);
+        bookPanel.add(txtNameOfBook, "wrap, span, grow");
+        bookPanel.add(lbPublisher);
+        bookPanel.add(txtPublisher, "wrap, span, grow");
+        bookPanel.add(lbCity);
+        bookPanel.add(txtCity, "wrap, span, grow");
+        bookPanel.add(btnCreate);
+        bookPanel.add(txtCitation, "wrap, span, grow");
+        txtCitation.setEditable(false);
+        bookPanel.add(btnMagazine);
 
+        //Button functionality
         btnCreate.addActionListener(e -> {
             //Citation creation
             String citation = StringCreation.createBook(txtSurname.getText(), txtName.getText(),
                     txtYear.getText(), txtNameOfBook.getText(), txtPublisher.getText(), txtCity.getText());
             txtCitation.setText(citation);
 
-            //Copy to clipboard
-            Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
-            StringSelection clipboardContent = new StringSelection(citation);
-            clip.setContents(clipboardContent, clipboardContent);
-            JOptionPane.showMessageDialog(null, "Citace vytvořena a zkopírována do schránky");
+            copyToClipboard(citation);
+        });
+        btnMagazine.addActionListener(e -> {
+
         });
 
         this.pack();
-        this.setContentPane(centerPanel);
+        this.setContentPane(bookPanel);
     }
+
 }
