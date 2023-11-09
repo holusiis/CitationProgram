@@ -5,10 +5,10 @@ public class StringCreation {
                 ". " + publisher + ", " + cityOfPublishing + ".";
         return finalString;
     }
-    public static String createBookMiddleName(String surname, String name, String middleName, String year, String nameOfBook, String publisher, String cityOfPublishing) {
+    public static String createMagazine(String surname, String name, String year, String nameOfArticle, String nameOfMagazine, String volume, String issue, String pages) {
         String finalString = "";
-        finalString += surname.toUpperCase() + ", " + name.toUpperCase().charAt(0) + ". " + middleName.toUpperCase().charAt(0) +
-                ". (" + year + "): " + nameOfBook + ". " + publisher + ", " + cityOfPublishing + ".";
+        finalString += surname.toUpperCase() + ", " + name.toUpperCase().charAt(0) + ". (" + year + "): " + nameOfArticle +
+                ". " + nameOfMagazine + ", " + volume + ", " + issue + ", " + pages + ".";
         return finalString;
     }
 }
