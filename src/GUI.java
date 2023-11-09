@@ -8,12 +8,7 @@ import java.awt.datatransfer.StringSelection;
 
 public class GUI extends JFrame {
     //private static int whichCitation = 0;
-    public static void initialize() {
-        FlatDarkLaf.setup();
-        JFrame gui = new GUI();
-        gui.setVisible(true);
-    }
-    public static void copyToClipboard(String whatToCopy) {
+    private static void copyToClipboard(String whatToCopy) {
         Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
         StringSelection clipboardContent = new StringSelection(whatToCopy);
         clip.setContents(clipboardContent, clipboardContent);
@@ -36,12 +31,18 @@ public class GUI extends JFrame {
     JTextField txtCitation = new JTextField();
     JButton btnCreate = new JButton("Vytvořit citaci");
     JButton btnMagazine = new JButton("Časopis");
-    public GUI() {
+    private GUI() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Citační Program - Geografie");
         this.setPreferredSize(new Dimension(600, 280));
+        this.setLocationRelativeTo(null);
+        buttonFunctionality();
+        setComponentsBook();
 
-        //Layout for bookPanel
+        this.pack();
+        this.setContentPane(bookPanel);
+    }
+    private void setComponentsBook() {
         bookPanel.add(lbSurname);
         bookPanel.add(txtSurname, "wrap, span, grow");
         bookPanel.add(lbName);
@@ -57,9 +58,8 @@ public class GUI extends JFrame {
         bookPanel.add(btnCreate);
         bookPanel.add(txtCitation, "wrap, span, grow");
         txtCitation.setEditable(false);
-        bookPanel.add(btnMagazine);
-
-        //Button functionality
+    }
+    private void buttonFunctionality() {
         btnCreate.addActionListener(e -> {
             //Citation creation
             String citation = StringCreation.createBook(txtSurname.getText(), txtName.getText(),
@@ -71,9 +71,10 @@ public class GUI extends JFrame {
         btnMagazine.addActionListener(e -> {
 
         });
-
-        this.pack();
-        this.setContentPane(bookPanel);
     }
-
+    public static void initialize() {
+        FlatDarkLaf.setup();
+        JFrame gui = new GUI();
+        gui.setVisible(true);
+    }
 }
