@@ -142,7 +142,7 @@ public class GUI extends JFrame {
         chapterPanel.add(txtSurnameChapter, "wrap, span, grow");
         chapterPanel.add(new JLabel("Jméno:"));
         chapterPanel.add(txtNameChapter, "wrap, span, grow");
-        chapterPanel.add(new JLabel("Rok:"));
+        chapterPanel.add(new JLabel("Rok vydání:"));
         chapterPanel.add(txtYearChapter, "wrap, span, grow");
         chapterPanel.add(new JLabel("Název kapitoly:"));
         chapterPanel.add(txtNameOfChapter, "wrap, span, grow");
