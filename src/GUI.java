@@ -163,6 +163,7 @@ public class GUI extends JFrame {
         chapterPanel.add(txtPagesChapter, "wrap, span, grow");
         chapterPanel.add(btnCreateChapter);
         chapterPanel.add(txtCitationChapter, "wrap, span, grow");
+        txtCitationChapter.setEditable(false);
 
         //Buttons Panel
         buttonsPanelChapter.add(btnBookChapter);
