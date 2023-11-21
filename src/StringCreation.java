@@ -11,4 +11,15 @@ public class StringCreation {
                 ". " + nameOfMagazine + ", " + volume + ", " + issue + ", " + pages + ".";
         return finalString;
     }
+    public static String createChapter(String surname, String name, String year, String nameOfChapter, boolean editor, String surnameEditor,
+                                       String nameEditor, String nameBook, String publisher, String city, String pages) {
+        String finalString = "";
+        finalString += surname.toUpperCase() + ", " + name.toUpperCase().charAt(0) + ". (" + year + "): " + nameOfChapter +
+        ". In: " + surnameEditor + ", " + nameEditor.charAt(0) + ".";
+        if(editor) {
+            finalString += " (ed.)";
+        }
+        finalString += ": " + nameBook + ". " + publisher + ", " + city + ", " + pages + ".";
+        return finalString;
+    }
 }
