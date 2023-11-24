@@ -7,6 +7,12 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
 public class GUI extends JFrame {
+    public static void initialize() {
+        FlatDarkLaf.setup();
+        JFrame gui = new GUI();
+        gui.setLocationRelativeTo(null);
+        gui.setVisible(true);
+    }
     Container c;
     CardLayout card = new CardLayout(10, 0);
     //Menu
@@ -14,6 +20,7 @@ public class GUI extends JFrame {
     JMenuItem mnBook = new JMenuItem("Kniha");
     JMenuItem mnMagazine = new JMenuItem("Časopis");
     JMenuItem mnChapter = new JMenuItem("Kapitola");
+    JMenuItem mnWeb = new JMenuItem("Web");
     //Book panel and it's components
     JPanel bookPanel = new JPanel(new MigLayout());
     JTextField txtSurnameBook = new JTextField(80);
@@ -51,7 +58,19 @@ public class GUI extends JFrame {
     JTextField txtCitationChapter = new JTextField();
     JCheckBox chcbEditor = new JCheckBox();
     JButton btnCreateChapter = new JButton("Vytvořit citaci");
-
+    //Web
+    JPanel webPanel = new JPanel(new MigLayout());
+    JTextField txtSurnameWeb = new JTextField(80);
+    JTextField txtCitationWeb = new JTextField();
+    JTextField txtNameWeb = new JTextField();
+    JTextField txtOrganisation = new JTextField(80);
+    JTextField txtYearWeb = new JTextField(80);
+    JTextField txtNameOfArticleWeb = new JTextField();
+    JTextField txtLink = new JTextField();
+    ButtonGroup webAuthor = new ButtonGroup();
+    JRadioButton rbtnAuthor = new JRadioButton("Autor");
+    JRadioButton rbtnOrganisation = new JRadioButton("Organizace");
+    JButton btnCreateWeb = new JButton("Vytvořit citaci");
     private GUI() {
         this.setTitle("Citační program");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -62,6 +81,7 @@ public class GUI extends JFrame {
         setComponentsBook();
         setComponentsMagazine();
         setComponentsChapter();
+        setComponentsWeb();
         menuFunctionality();
         buttonFunctionalityCitation();
         this.pack();
@@ -72,12 +92,14 @@ public class GUI extends JFrame {
         c.add("book" ,bookPanel);
         c.add("magazine", magazinePanel);
         c.add("chapter", chapterPanel);
+        c.add("web", webPanel);
     }
     private void setComponentsMenu() {
         this.setJMenuBar(menuBar);
         menuBar.add(mnBook);
         menuBar.add(mnMagazine);
         menuBar.add(mnChapter);
+        menuBar.add(mnWeb);
     }
     private void setComponentsBook() {
         bookPanel.add(new JLabel("Příjmení:"));
@@ -145,6 +167,29 @@ public class GUI extends JFrame {
         chapterPanel.add(txtCitationChapter, "wrap, span, grow");
         txtCitationChapter.setEditable(false);
     }
+    private void setComponentsWeb() {
+        webAuthor.add(rbtnAuthor);
+        rbtnAuthor.setSelected(true);
+        webAuthor.add(rbtnOrganisation);
+        webPanel.add(rbtnAuthor, "span 3");
+        webPanel.add(rbtnOrganisation, "wrap, span");
+        webPanel.add(new JLabel("Příjmení:"));
+        webPanel.add(txtSurnameWeb, "span 2");
+        webPanel.add(new JLabel("Organizace:"));
+        webPanel.add(txtOrganisation, "wrap, span, grow");
+        txtOrganisation.setEditable(false);
+        webPanel.add(new JLabel("Jméno:"));
+        webPanel.add(txtNameWeb, "wrap, span 2, grow");
+        webPanel.add(new JLabel("Rok:"));
+        webPanel.add(txtYearWeb, "wrap, span, grow");
+        webPanel.add(new JLabel("Název článku:"));
+        webPanel.add(txtNameOfArticleWeb, "wrap, span, grow");
+        webPanel.add(new JLabel("Odkaz:"));
+        webPanel.add(txtLink, "wrap, span, grow");
+        webPanel.add(btnCreateWeb);
+        webPanel.add(txtCitationWeb, "wrap, span, grow");
+        txtCitationWeb.setEditable(false);
+    }
     private void menuFunctionality() {
         mnBook.addActionListener(e -> {
             card.show(c, "book");
@@ -158,6 +203,16 @@ public class GUI extends JFrame {
             card.show(c, "chapter");
             this.setSize(600, 395);
         });
+        mnWeb.addActionListener(e -> {
+            card.show(c, "web");
+            this.setSize(600, 255);
+        });
+    }
+    private static void copyToClipboard(String whatToCopy) {
+        Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
+        StringSelection clipboardContent = new StringSelection(whatToCopy);
+        clip.setContents(clipboardContent, clipboardContent);
+        JOptionPane.showMessageDialog(null, "Citace vytvořena a zkopírována do schránky");
     }
     private void buttonFunctionalityCitation() {
         btnCreateBook.addActionListener(e -> {
@@ -168,6 +223,7 @@ public class GUI extends JFrame {
             copyToClipboard(citation);
         });
         btnCreateMagazine.addActionListener(e -> {
+            //Citation creation
             String citation = StringCreation.createMagazine(txtSurnameMagazine.getText(), txtNameMagazine.getText(),
                     txtYearMagazine.getText(), txtNameOfArticle.getText(), txtNameOfMagazine.getText(), txtVolume.getText(),
                     txtIssue.getText(), txtPages.getText());
@@ -175,6 +231,7 @@ public class GUI extends JFrame {
             copyToClipboard(citation);
         });
         btnCreateChapter.addActionListener(e -> {
+            //Citation creation
             boolean editorIsSelected = chcbEditor.isSelected();
             String citation = StringCreation.createChapter(txtSurnameChapter.getText(), txtNameChapter.getText(), txtYearChapter.getText(),
                     txtNameOfChapter.getText(), editorIsSelected, txtSurnameEditor.getText(), txtNameEditor.getText(),
@@ -182,17 +239,15 @@ public class GUI extends JFrame {
             txtCitationChapter.setText(citation);
             copyToClipboard(citation);
         });
-    }
-    private static void copyToClipboard(String whatToCopy) {
-        Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
-        StringSelection clipboardContent = new StringSelection(whatToCopy);
-        clip.setContents(clipboardContent, clipboardContent);
-        JOptionPane.showMessageDialog(null, "Citace vytvořena a zkopírována do schránky");
-    }
-    public static void initialize() {
-        FlatDarkLaf.setup();
-        JFrame gui = new GUI();
-        gui.setLocationRelativeTo(null);
-        gui.setVisible(true);
+        rbtnAuthor.addActionListener(e -> {
+            txtSurnameWeb.setEditable(true);
+            txtNameWeb.setEditable(true);
+            txtOrganisation.setEditable(false);
+        });
+        rbtnOrganisation.addActionListener(e -> {
+            txtSurnameWeb.setEditable(false);
+            txtNameWeb.setEditable(false);
+            txtOrganisation.setEditable(true);
+        });
     }
 }
