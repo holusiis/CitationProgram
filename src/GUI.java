@@ -74,7 +74,7 @@ public class GUI extends JFrame {
     private GUI() {
         this.setTitle("Citační program");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setPreferredSize(new Dimension(600, 255));
+        this.setPreferredSize(new Dimension(700, 255));
         this.setResizable(false);
         setContainer();
         setComponentsMenu();
@@ -193,19 +193,19 @@ public class GUI extends JFrame {
     private void menuFunctionality() {
         mnBook.addActionListener(e -> {
             card.show(c, "book");
-            this.setSize(600, 255);
+            this.setSize(700, 255);
         });
         mnMagazine.addActionListener(e -> {
             card.show(c, "magazine");
-            this.setSize(600, 310);
+            this.setSize(700, 310);
         });
         mnChapter.addActionListener(e -> {
             card.show(c, "chapter");
-            this.setSize(600, 395);
+            this.setSize(700, 395);
         });
         mnWeb.addActionListener(e -> {
             card.show(c, "web");
-            this.setSize(600, 255);
+            this.setSize(700, 255);
         });
     }
     private static void copyToClipboard(String whatToCopy) {
