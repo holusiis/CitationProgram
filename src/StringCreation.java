@@ -12,14 +12,16 @@ public class StringCreation {
         int j = 0, k = 1;
         for(int i = 0; i < 3; i++) {
             String temporaryString;
-            temporaryString = stringToday.substring(array[j],array[k] + 1);
+            temporaryString = stringToday.substring(array[j], array[k] + 1);
             if(temporaryString.startsWith("0")) {
                 currentDate.append(temporaryString.substring(1));
             }
             else {
                 currentDate.append(temporaryString);
             }
-            currentDate.append(" ");
+            if(i < 2) {
+                currentDate.append(". ");
+            }
             j += 2;
             k += 2;
         }
@@ -48,16 +50,24 @@ public class StringCreation {
         finalString += ": " + nameBook + ". " + publisher + ", " + city + ", " + pages + ".";
         return finalString;
     }
-    public static String createWeb(boolean authorOrOrganization, String surname, String name, String organisation, String year,
-                                   String articleName, String link) {
+    public static String createWeb(boolean authorOrOrganization, boolean chcbNameOrganization, String surname, String name,
+                                   String shortcutOrganisation, String nameOrganization, String year, String articleName,
+                                   String link) {
         String finalString = "";
         if(authorOrOrganization) {
             finalString += surname.toUpperCase() + ", " + name.toUpperCase().charAt(0) + ".";
         }
         else {
-            finalString += organisation.toUpperCase();
+            finalString += shortcutOrganisation.toUpperCase();
         }
-        finalString += " (" + year + "): " + articleName + ", " + link + " (" + currentDate() + ")";
+        finalString += " (" + year + "): " + articleName + ", ";
+        if(chcbNameOrganization) {
+            finalString += nameOrganization + ", ";
+        }
+        else {
+            finalString += shortcutOrganisation + ", ";
+        }
+        finalString += link + " (" + currentDate() + ")";
         return finalString;
     }
 }

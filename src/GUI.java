@@ -63,13 +63,15 @@ public class GUI extends JFrame {
     JTextField txtSurnameWeb = new JTextField(80);
     JTextField txtCitationWeb = new JTextField();
     JTextField txtNameWeb = new JTextField();
-    JTextField txtOrganisation = new JTextField(80);
+    JTextField txtOrganisationShortcut = new JTextField(80);
+    JTextField txtOrganisationName = new JTextField();
     JTextField txtYearWeb = new JTextField(80);
     JTextField txtNameOfArticleWeb = new JTextField();
     JTextField txtLink = new JTextField();
     ButtonGroup webAuthor = new ButtonGroup();
     JRadioButton rbtnAuthor = new JRadioButton("Autor");
     JRadioButton rbtnOrganisation = new JRadioButton("Organizace");
+    JCheckBox chcbOrganisationName = new JCheckBox();
     JButton btnCreateWeb = new JButton("Vytvořit citaci");
     private GUI() {
         this.setTitle("Citační program");
@@ -175,11 +177,16 @@ public class GUI extends JFrame {
         webPanel.add(rbtnOrganisation, "wrap, span");
         webPanel.add(new JLabel("Příjmení:"));
         webPanel.add(txtSurnameWeb, "span 2");
-        webPanel.add(new JLabel("Organizace:"));
-        webPanel.add(txtOrganisation, "wrap, span, grow");
-        txtOrganisation.setEditable(false);
+        webPanel.add(new JLabel("Zkratka:"), "split");
+        webPanel.add(txtOrganisationShortcut, "wrap, span, grow");
+        txtOrganisationShortcut.setEditable(false);
         webPanel.add(new JLabel("Jméno:"));
-        webPanel.add(txtNameWeb, "wrap, span 2, grow");
+        webPanel.add(txtNameWeb, "span 2, grow");
+        webPanel.add(chcbOrganisationName, "split");
+        chcbOrganisationName.setEnabled(false);
+        webPanel.add(new JLabel("Název:"));
+        webPanel.add(txtOrganisationName, "wrap, span, grow");
+        txtOrganisationName.setEditable(false);
         webPanel.add(new JLabel("Rok:"));
         webPanel.add(txtYearWeb, "wrap, span, grow");
         webPanel.add(new JLabel("Název článku:"));
@@ -240,20 +247,26 @@ public class GUI extends JFrame {
         });
         btnCreateWeb.addActionListener(e -> {
             //Citation creation
-            String citation = StringCreation.createWeb(rbtnAuthor.isSelected(), txtSurnameWeb.getText(), txtNameWeb.getText(),
-                    txtOrganisation.getText(), txtYearWeb.getText(), txtNameOfArticleWeb.getText(), txtLink.getText());
+            String citation = StringCreation.createWeb(rbtnAuthor.isSelected(), chcbOrganisationName.isSelected(), txtSurnameWeb.getText(),
+                    txtNameWeb.getText(), txtOrganisationShortcut.getText(), txtOrganisationName.getText(), txtYearWeb.getText(),
+                    txtNameOfArticleWeb.getText(), txtLink.getText());
             txtCitationWeb.setText(citation);
             copyToClipboard(citation);
         });
         rbtnAuthor.addActionListener(e -> {
             txtSurnameWeb.setEditable(true);
             txtNameWeb.setEditable(true);
-            txtOrganisation.setEditable(false);
+            txtOrganisationShortcut.setEditable(false);
+            txtOrganisationName.setEditable(false);
+            chcbOrganisationName.setEnabled(false);
+            chcbOrganisationName.setSelected(false);
         });
         rbtnOrganisation.addActionListener(e -> {
             txtSurnameWeb.setEditable(false);
             txtNameWeb.setEditable(false);
-            txtOrganisation.setEditable(true);
+            txtOrganisationShortcut.setEditable(true);
+            chcbOrganisationName.setEnabled(true);
         });
+        chcbOrganisationName.addActionListener(e -> txtOrganisationName.setEditable(chcbOrganisationName.isSelected()));
     }
 }
