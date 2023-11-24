@@ -232,11 +232,17 @@ public class GUI extends JFrame {
         });
         btnCreateChapter.addActionListener(e -> {
             //Citation creation
-            boolean editorIsSelected = chcbEditor.isSelected();
             String citation = StringCreation.createChapter(txtSurnameChapter.getText(), txtNameChapter.getText(), txtYearChapter.getText(),
-                    txtNameOfChapter.getText(), editorIsSelected, txtSurnameEditor.getText(), txtNameEditor.getText(),
+                    txtNameOfChapter.getText(), chcbEditor.isSelected(), txtSurnameEditor.getText(), txtNameEditor.getText(),
                     txtNameOfBookChapter.getText(), txtPublisherChapter.getText(), txtCityChapter.getText(), txtPagesChapter.getText());
             txtCitationChapter.setText(citation);
+            copyToClipboard(citation);
+        });
+        btnCreateWeb.addActionListener(e -> {
+            //Citation creation
+            String citation = StringCreation.createWeb(rbtnAuthor.isSelected(), txtSurnameWeb.getText(), txtNameWeb.getText(),
+                    txtOrganisation.getText(), txtYearWeb.getText(), txtNameOfArticleWeb.getText(), txtLink.getText());
+            txtCitationWeb.setText(citation);
             copyToClipboard(citation);
         });
         rbtnAuthor.addActionListener(e -> {

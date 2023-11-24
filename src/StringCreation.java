@@ -1,4 +1,30 @@
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 public class StringCreation {
+    public static String currentDate() {
+        StringBuilder currentDate = new StringBuilder();
+        ZoneId z = ZoneId.of("Europe/Prague");
+        //YYYY-MM-DD
+        LocalDate today = LocalDate.now (z);
+        String stringToday = today.toString();
+        int[] array = {8, 9, 5, 6, 0, 3};
+        int j = 0, k = 1;
+        for(int i = 0; i < 3; i++) {
+            String temporaryString;
+            temporaryString = stringToday.substring(array[j],array[k] + 1);
+            if(temporaryString.startsWith("0")) {
+                currentDate.append(temporaryString.substring(1));
+            }
+            else {
+                currentDate.append(temporaryString);
+            }
+            currentDate.append(" ");
+            j += 2;
+            k += 2;
+        }
+        return currentDate.toString();
+    }
     public static String createBook(String surname, String name, String year, String nameOfBook, String publisher, String cityOfPublishing) {
         String finalString = "";
         finalString += surname.toUpperCase() + ", " + name.toUpperCase().charAt(0) + ". (" + year + "): " + nameOfBook +
@@ -20,6 +46,18 @@ public class StringCreation {
             finalString += " (ed.)";
         }
         finalString += ": " + nameBook + ". " + publisher + ", " + city + ", " + pages + ".";
+        return finalString;
+    }
+    public static String createWeb(boolean authorOrOrganization, String surname, String name, String organisation, String year,
+                                   String articleName, String link) {
+        String finalString = "";
+        if(authorOrOrganization) {
+            finalString += surname.toUpperCase() + ", " + name.toUpperCase().charAt(0) + ".";
+        }
+        else {
+            finalString += organisation.toUpperCase();
+        }
+        finalString += " (" + year + "): " + articleName + ", " + link + " (" + currentDate() + ")";
         return finalString;
     }
 }
