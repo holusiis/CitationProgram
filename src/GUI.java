@@ -7,17 +7,15 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
 public class GUI extends JFrame {
-    private static void copyToClipboard(String whatToCopy) {
-        Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
-        StringSelection clipboardContent = new StringSelection(whatToCopy);
-        clip.setContents(clipboardContent, clipboardContent);
-        JOptionPane.showMessageDialog(null, "Citace vytvořena a zkopírována do schránky");
-    }
     Container c;
     CardLayout card = new CardLayout(10, 0);
+    //Menu
+    JMenuBar menuBar = new JMenuBar();
+    JMenuItem mnBook = new JMenuItem("Kniha");
+    JMenuItem mnMagazine = new JMenuItem("Časopis");
+    JMenuItem mnChapter = new JMenuItem("Kapitola");
     //Book panel and it's components
     JPanel bookPanel = new JPanel(new MigLayout());
-    JPanel buttonsPanelBook = new JPanel();
     JTextField txtSurnameBook = new JTextField(80);
     JTextField txtNameBook = new JTextField();
     JTextField txtYearBook = new JTextField();
@@ -26,12 +24,8 @@ public class GUI extends JFrame {
     JTextField txtCityBook = new JTextField();
     JTextField txtCitationBook = new JTextField();
     JButton btnCreateBook = new JButton("Vytvořit citaci");
-    JButton btnBookBook = new JButton("Kniha");
-    JButton btnMagazineBook = new JButton("Časopis");
-    JButton btnChapterBook = new JButton("Kapitola");
     //Magazine panel and it's components
     JPanel magazinePanel= new JPanel(new MigLayout());
-    JPanel buttonsPanelMagazine = new JPanel();
     JTextField txtSurnameMagazine = new JTextField(80);
     JTextField txtNameMagazine = new JTextField();
     JTextField txtYearMagazine = new JTextField();
@@ -42,12 +36,8 @@ public class GUI extends JFrame {
     JTextField txtPages = new JTextField();
     JTextField txtCitationMagazine = new JTextField();
     JButton btnCreateMagazine = new JButton("Vytvořit citaci");
-    JButton btnBookMagazine = new JButton("Kniha");
-    JButton btnMagazineMagazine = new JButton("Časopis");
-    JButton btnChapterMagazine = new JButton("Kapitola");
     //Chapter panel and it's components
     JPanel chapterPanel = new JPanel(new MigLayout());
-    JPanel buttonsPanelChapter = new JPanel();
     JTextField txtSurnameChapter = new JTextField(80);
     JTextField txtNameChapter = new JTextField();
     JTextField txtYearChapter = new JTextField();
@@ -61,23 +51,19 @@ public class GUI extends JFrame {
     JTextField txtCitationChapter = new JTextField();
     JCheckBox chcbEditor = new JCheckBox();
     JButton btnCreateChapter = new JButton("Vytvořit citaci");
-    JButton btnBookChapter = new JButton("Kniha");
-    JButton btnMagazineChapter = new JButton("Časopis");
-    JButton btnChapterChapter = new JButton("Kapitola");
 
     private GUI() {
+        this.setTitle("Citační program");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setTitle("Citační Program - Geografie");
-        this.setPreferredSize(new Dimension(600, 415));
-        this.setLocationRelativeTo(null);
+        this.setPreferredSize(new Dimension(600, 255));
         this.setResizable(false);
+        setContainer();
+        setComponentsMenu();
         setComponentsBook();
         setComponentsMagazine();
         setComponentsChapter();
-        buttonFunctionalityBook();
-        buttonFunctionalityMagazine();
-        buttonFunctionalityChapter();
-        setContainer();
+        menuFunctionality();
+        buttonFunctionalityCitation();
         this.pack();
     }
     private void setContainer() {
@@ -86,6 +72,12 @@ public class GUI extends JFrame {
         c.add("book" ,bookPanel);
         c.add("magazine", magazinePanel);
         c.add("chapter", chapterPanel);
+    }
+    private void setComponentsMenu() {
+        this.setJMenuBar(menuBar);
+        menuBar.add(mnBook);
+        menuBar.add(mnMagazine);
+        menuBar.add(mnChapter);
     }
     private void setComponentsBook() {
         bookPanel.add(new JLabel("Příjmení:"));
@@ -103,12 +95,6 @@ public class GUI extends JFrame {
         bookPanel.add(btnCreateBook);
         bookPanel.add(txtCitationBook, "wrap, span, grow");
         txtCitationBook.setEditable(false);
-
-        //Buttons panel
-        buttonsPanelBook.add(btnBookBook);
-        buttonsPanelBook.add(btnMagazineBook);
-        buttonsPanelBook.add(btnChapterBook);
-        bookPanel.add(buttonsPanelBook, "dock north");
     }
     private void setComponentsMagazine() {
         magazinePanel.add(new JLabel("Příjmení:"));
@@ -130,12 +116,6 @@ public class GUI extends JFrame {
         magazinePanel.add(btnCreateMagazine);
         magazinePanel.add(txtCitationMagazine, "wrap, span, grow");
         txtCitationMagazine.setEditable(false);
-
-        //Buttons panel
-        buttonsPanelMagazine.add(btnBookMagazine);
-        buttonsPanelMagazine.add(btnMagazineMagazine);
-        buttonsPanelMagazine.add(btnChapterMagazine);
-        magazinePanel.add(buttonsPanelMagazine, "dock north");
     }
     private void setComponentsChapter() {
         chapterPanel.add(new JLabel("Příjmení:"));
@@ -164,27 +144,29 @@ public class GUI extends JFrame {
         chapterPanel.add(btnCreateChapter);
         chapterPanel.add(txtCitationChapter, "wrap, span, grow");
         txtCitationChapter.setEditable(false);
-
-        //Buttons Panel
-        buttonsPanelChapter.add(btnBookChapter);
-        buttonsPanelChapter.add(btnMagazineChapter);
-        buttonsPanelChapter.add(btnChapterChapter);
-        chapterPanel.add(buttonsPanelChapter, "dock north");
     }
-    private void buttonFunctionalityBook() {
+    private void menuFunctionality() {
+        mnBook.addActionListener(e -> {
+            card.show(c, "book");
+            this.setSize(600, 255);
+        });
+        mnMagazine.addActionListener(e -> {
+            card.show(c, "magazine");
+            this.setSize(600, 310);
+        });
+        mnChapter.addActionListener(e -> {
+            card.show(c, "chapter");
+            this.setSize(600, 395);
+        });
+    }
+    private void buttonFunctionalityCitation() {
         btnCreateBook.addActionListener(e -> {
             //Citation creation
             String citation = StringCreation.createBook(txtSurnameBook.getText(), txtNameBook.getText(),
                     txtYearBook.getText(), txtNameOfBook.getText(), txtPublisherBook.getText(), txtCityBook.getText());
             txtCitationBook.setText(citation);
-
             copyToClipboard(citation);
         });
-        btnBookBook.addActionListener(e -> card.show(c, "book"));
-        btnMagazineBook.addActionListener(e -> card.show(c, "magazine"));
-        btnChapterBook.addActionListener(e -> card.show(c, "chapter"));
-    }
-    private void buttonFunctionalityMagazine() {
         btnCreateMagazine.addActionListener(e -> {
             String citation = StringCreation.createMagazine(txtSurnameMagazine.getText(), txtNameMagazine.getText(),
                     txtYearMagazine.getText(), txtNameOfArticle.getText(), txtNameOfMagazine.getText(), txtVolume.getText(),
@@ -192,11 +174,6 @@ public class GUI extends JFrame {
             txtCitationMagazine.setText(citation);
             copyToClipboard(citation);
         });
-        btnBookMagazine.addActionListener(e -> card.show(c, "book"));
-        btnMagazineMagazine.addActionListener(e -> card.show(c, "magazine"));
-        btnChapterMagazine.addActionListener(e -> card.show(c, "chapter"));
-    }
-    private void buttonFunctionalityChapter() {
         btnCreateChapter.addActionListener(e -> {
             boolean editorIsSelected = chcbEditor.isSelected();
             String citation = StringCreation.createChapter(txtSurnameChapter.getText(), txtNameChapter.getText(), txtYearChapter.getText(),
@@ -205,14 +182,17 @@ public class GUI extends JFrame {
             txtCitationChapter.setText(citation);
             copyToClipboard(citation);
         });
-
-        btnBookChapter.addActionListener(e -> card.show(c, "book"));
-        btnMagazineChapter.addActionListener(e -> card.show(c, "magazine"));
-        btnChapterChapter.addActionListener(e -> card.show(c, "chapter"));
+    }
+    private static void copyToClipboard(String whatToCopy) {
+        Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
+        StringSelection clipboardContent = new StringSelection(whatToCopy);
+        clip.setContents(clipboardContent, clipboardContent);
+        JOptionPane.showMessageDialog(null, "Citace vytvořena a zkopírována do schránky");
     }
     public static void initialize() {
         FlatDarkLaf.setup();
         JFrame gui = new GUI();
+        gui.setLocationRelativeTo(null);
         gui.setVisible(true);
     }
 }
