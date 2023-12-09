@@ -1,13 +1,10 @@
 import com.formdev.flatlaf.FlatDarkLaf;
 import net.miginfocom.swing.MigLayout;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.io.File;
-import java.io.IOException;
 
 public class GUI extends JFrame {
     public static void initialize() {
@@ -81,11 +78,8 @@ public class GUI extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setPreferredSize(new Dimension(700, 255));
         this.setResizable(false);
-        try {
-            this.setIconImage(ImageIO.read(new File("res/icon.png")));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        Image icon = Toolkit.getDefaultToolkit().getImage("res/icon.png");
+        this.setIconImage(icon);
         setContainer();
         setComponentsMenu();
         setComponentsBook();
