@@ -226,32 +226,32 @@ public class GUI extends JFrame {
     private void buttonFunctionalityCitation() {
         btnCreateBook.addActionListener(e -> {
             //Citation creation
-            String citation = StringCreation.createBook(txtSurnameBook.getText(), txtNameBook.getText(),
-                    txtYearBook.getText(), txtNameOfBook.getText(), txtPublisherBook.getText(), txtCityBook.getText());
+            String citation = StringCreation.createBook(txtSurnameBook.getText().trim(), txtNameBook.getText().trim(),
+                    txtYearBook.getText().trim(), txtNameOfBook.getText().trim(), txtPublisherBook.getText().trim(), txtCityBook.getText().trim());
             txtCitationBook.setText(citation);
             copyToClipboard(citation);
         });
         btnCreateMagazine.addActionListener(e -> {
             //Citation creation
-            String citation = StringCreation.createMagazine(txtSurnameMagazine.getText(), txtNameMagazine.getText(),
-                    txtYearMagazine.getText(), txtNameOfArticle.getText(), txtNameOfMagazine.getText(), txtVolume.getText(),
-                    txtIssue.getText(), txtPages.getText());
+            String citation = StringCreation.createMagazine(txtSurnameMagazine.getText().trim(), txtNameMagazine.getText().trim(),
+                    txtYearMagazine.getText().trim(), txtNameOfArticle.getText().trim(), txtNameOfMagazine.getText().trim(), txtVolume.getText().trim(),
+                    txtIssue.getText().trim(), txtPages.getText().trim());
             txtCitationMagazine.setText(citation);
             copyToClipboard(citation);
         });
         btnCreateChapter.addActionListener(e -> {
             //Citation creation
-            String citation = StringCreation.createChapter(txtSurnameChapter.getText(), txtNameChapter.getText(), txtYearChapter.getText(),
-                    txtNameOfChapter.getText(), chcbEditor.isSelected(), txtSurnameEditor.getText(), txtNameEditor.getText(),
-                    txtNameOfBookChapter.getText(), txtPublisherChapter.getText(), txtCityChapter.getText(), txtPagesChapter.getText());
+            String citation = StringCreation.createChapter(txtSurnameChapter.getText().trim(), txtNameChapter.getText().trim(), txtYearChapter.getText().trim(),
+                    txtNameOfChapter.getText().trim(), chcbEditor.isSelected(), txtSurnameEditor.getText().trim(), txtNameEditor.getText().trim(),
+                    txtNameOfBookChapter.getText().trim(), txtPublisherChapter.getText().trim(), txtCityChapter.getText().trim(), txtPagesChapter.getText().trim());
             txtCitationChapter.setText(citation);
             copyToClipboard(citation);
         });
         btnCreateWeb.addActionListener(e -> {
             //Citation creation
-            String citation = StringCreation.createWeb(rbtnAuthor.isSelected(), chcbOrganisationName.isSelected(), txtSurnameWeb.getText(),
-                    txtNameWeb.getText(), txtOrganisationShortcut.getText(), txtOrganisationName.getText(), txtYearWeb.getText(),
-                    txtNameOfArticleWeb.getText(), txtLink.getText());
+            String citation = StringCreation.createWeb(rbtnAuthor.isSelected(), chcbOrganisationName.isSelected(), txtSurnameWeb.getText().trim(),
+                    txtNameWeb.getText().trim(), txtOrganisationShortcut.getText().trim(), txtOrganisationName.getText().trim(), txtYearWeb.getText().trim(),
+                    txtNameOfArticleWeb.getText().trim(), txtLink.getText().trim());
             txtCitationWeb.setText(citation);
             copyToClipboard(citation);
         });
