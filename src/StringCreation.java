@@ -15,8 +15,7 @@ public class StringCreation {
             temporaryString = stringToday.substring(array[j], array[k] + 1);
             if(temporaryString.startsWith("0")) {
                 currentDate.append(temporaryString.substring(1));
-            }
-            else {
+            } else {
                 currentDate.append(temporaryString);
             }
             if(i < 2) {
@@ -56,15 +55,13 @@ public class StringCreation {
         String finalString = "";
         if(authorOrOrganization) {
             finalString += surname.toUpperCase() + ", " + name.toUpperCase().charAt(0) + ".";
-        }
-        else {
+        } else {
             finalString += shortcutOrganisation.toUpperCase();
         }
         finalString += " (" + year + "): " + articleName + ", ";
         if(chcbNameOrganization) {
             finalString += nameOrganization + ", ";
-        }
-        else {
+        } else {
             finalString += shortcutOrganisation + ", ";
         }
         finalString += link + " (" + currentDate() + ")";
