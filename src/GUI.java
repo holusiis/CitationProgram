@@ -7,22 +7,35 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
 public class GUI extends JFrame {
+    /**
+     * Initializes the whole GUI and creates a new frame
+     */
     public static void initialize() {
         FlatDarkLaf.setup();
         JFrame gui = new GUI();
         gui.setLocationRelativeTo(null);
         gui.setVisible(true);
     }
+
+    /**
+     * Container and card Layout
+     */
     Container c;
     CardLayout card = new CardLayout(10, 0);
-    //Menu
+    /**
+     * Menu bar and it's components
+     */
     JMenuBar menuBar = new JMenuBar();
+    //JMenuItems
     JMenuItem mnBook = new JMenuItem("Kniha");
     JMenuItem mnMagazine = new JMenuItem("Časopis");
     JMenuItem mnChapter = new JMenuItem("Kapitola");
     JMenuItem mnWeb = new JMenuItem("Web");
-    //Book panel and it's components
+    /**
+     * Book panel and it's components
+     */
     JPanel bookPanel = new JPanel(new MigLayout());
+    //JTextFields
     JTextField txtSurnameBook = new JTextField(80);
     JTextField txtNameBook = new JTextField();
     JTextField txtYearBook = new JTextField();
@@ -30,9 +43,13 @@ public class GUI extends JFrame {
     JTextField txtPublisherBook = new JTextField();
     JTextField txtCityBook = new JTextField();
     JTextField txtCitationBook = new JTextField();
+    //JButtons
     JButton btnCreateBook = new JButton("Vytvořit citaci");
-    //Magazine panel and it's components
+    /**
+     * Magazine panel and it's components
+     */
     JPanel magazinePanel= new JPanel(new MigLayout());
+    //JTextFields
     JTextField txtSurnameMagazine = new JTextField(80);
     JTextField txtNameMagazine = new JTextField();
     JTextField txtYearMagazine = new JTextField();
@@ -42,9 +59,13 @@ public class GUI extends JFrame {
     JTextField txtIssue = new JTextField();
     JTextField txtPages = new JTextField();
     JTextField txtCitationMagazine = new JTextField();
+    //JButtons
     JButton btnCreateMagazine = new JButton("Vytvořit citaci");
-    //Chapter panel and it's components
+    /**
+     * Chapter panel and it's components
+     */
     JPanel chapterPanel = new JPanel(new MigLayout());
+    //JTextFields
     JTextField txtSurnameChapter = new JTextField(80);
     JTextField txtNameChapter = new JTextField();
     JTextField txtYearChapter = new JTextField();
@@ -56,10 +77,15 @@ public class GUI extends JFrame {
     JTextField txtCityChapter = new JTextField();
     JTextField txtPagesChapter = new JTextField();
     JTextField txtCitationChapter = new JTextField();
+    //JCheckBoxes
     JCheckBox chcbEditor = new JCheckBox();
+    //JButtons
     JButton btnCreateChapter = new JButton("Vytvořit citaci");
-    //Web
+    /**
+     * Web panel and it's components
+     */
     JPanel webPanel = new JPanel(new MigLayout());
+    //JTextFields
     JTextField txtSurnameWeb = new JTextField(80);
     JTextField txtCitationWeb = new JTextField();
     JTextField txtNameWeb = new JTextField();
@@ -68,11 +94,18 @@ public class GUI extends JFrame {
     JTextField txtYearWeb = new JTextField(80);
     JTextField txtNameOfArticleWeb = new JTextField();
     JTextField txtLink = new JTextField();
+    //ButtonGroups
     ButtonGroup webAuthor = new ButtonGroup();
+    //JRadioButtons
     JRadioButton rbtnAuthor = new JRadioButton("Autor");
     JRadioButton rbtnOrganisation = new JRadioButton("Organizace");
+    //JCheckBoxes
     JCheckBox chcbOrganisationName = new JCheckBox();
+    //JButtons
     JButton btnCreateWeb = new JButton("Vytvořit citaci");
+    /**
+     * Constructor for the GUI which sets default parameters, icon, components and button functionality
+     */
     private GUI() {
         this.setTitle("Citační program");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -88,8 +121,12 @@ public class GUI extends JFrame {
         setComponentsWeb();
         menuFunctionality();
         buttonFunctionalityCitation();
+        checkboxFunctionality();
         this.pack();
     }
+    /**
+     * Creates a  container and adds panels to card layout
+     */
     private void setContainer() {
         c = getContentPane();
         c.setLayout(card);
@@ -98,6 +135,9 @@ public class GUI extends JFrame {
         c.add("chapter", chapterPanel);
         c.add("web", webPanel);
     }
+    /**
+     * Sets menu bar and it's components
+     */
     private void setComponentsMenu() {
         this.setJMenuBar(menuBar);
         menuBar.add(mnBook);
@@ -105,6 +145,9 @@ public class GUI extends JFrame {
         menuBar.add(mnChapter);
         menuBar.add(mnWeb);
     }
+    /**
+     * Sets components for the book panel
+     */
     private void setComponentsBook() {
         bookPanel.add(new JLabel("Příjmení:"));
         bookPanel.add(txtSurnameBook, "wrap, span, grow");
@@ -122,6 +165,9 @@ public class GUI extends JFrame {
         bookPanel.add(txtCitationBook, "wrap, span, grow");
         txtCitationBook.setEditable(false);
     }
+    /**
+     * Sets components for the magazine panel
+     */
     private void setComponentsMagazine() {
         magazinePanel.add(new JLabel("Příjmení:"));
         magazinePanel.add(txtSurnameMagazine, "wrap, span, grow");
@@ -143,6 +189,9 @@ public class GUI extends JFrame {
         magazinePanel.add(txtCitationMagazine, "wrap, span, grow");
         txtCitationMagazine.setEditable(false);
     }
+    /**
+     * Sets components for the chapter panel
+     */
     private void setComponentsChapter() {
         chapterPanel.add(new JLabel("Příjmení:"));
         chapterPanel.add(txtSurnameChapter, "wrap, span, grow");
@@ -157,8 +206,10 @@ public class GUI extends JFrame {
         chapterPanel.add(new JLabel("Je editor jiný než autor?"), "wrap");
         chapterPanel.add(new JLabel("Příjmení"));
         chapterPanel.add(txtSurnameEditor, "wrap, span, grow");
+        txtSurnameEditor.setEnabled(false);
         chapterPanel.add(new JLabel("Jméno:"));
         chapterPanel.add(txtNameEditor, "wrap, span, grow");
+        txtNameEditor.setEnabled(false);
         chapterPanel.add(new JLabel("Název knihy:"));
         chapterPanel.add(txtNameOfBookChapter, "wrap, span, grow");
         chapterPanel.add(new JLabel("Nakladatelství:"));
@@ -171,6 +222,9 @@ public class GUI extends JFrame {
         chapterPanel.add(txtCitationChapter, "wrap, span, grow");
         txtCitationChapter.setEditable(false);
     }
+    /**
+     * Sets components for the website panel
+     */
     private void setComponentsWeb() {
         webAuthor.add(rbtnAuthor);
         rbtnAuthor.setSelected(true);
@@ -199,6 +253,19 @@ public class GUI extends JFrame {
         webPanel.add(txtCitationWeb, "wrap, span, grow");
         txtCitationWeb.setEditable(false);
     }
+    /**
+     * Copies a certain text to the clipboard
+     * @param whatToCopy The text which you want to copy to clipboard
+     */
+    private static void copyToClipboard(String whatToCopy) {
+        Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
+        StringSelection clipboardContent = new StringSelection(whatToCopy);
+        clip.setContents(clipboardContent, clipboardContent);
+        JOptionPane.showMessageDialog(null, "Citace vytvořena a zkopírována do schránky");
+    }
+    /**
+     * Adds functionality to the menu
+     */
     private void menuFunctionality() {
         mnBook.addActionListener(e -> {
             card.show(c, "book");
@@ -217,12 +284,9 @@ public class GUI extends JFrame {
             this.setSize(700, 255);
         });
     }
-    private static void copyToClipboard(String whatToCopy) {
-        Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
-        StringSelection clipboardContent = new StringSelection(whatToCopy);
-        clip.setContents(clipboardContent, clipboardContent);
-        JOptionPane.showMessageDialog(null, "Citace vytvořena a zkopírována do schránky");
-    }
+    /**
+     * Adds button functionality to create citation buttons
+     */
     private void buttonFunctionalityCitation() {
         btnCreateBook.addActionListener(e -> {
             //Citation creation
@@ -254,6 +318,15 @@ public class GUI extends JFrame {
                     txtNameOfArticleWeb.getText().trim(), txtLink.getText().trim());
             txtCitationWeb.setText(citation);
             copyToClipboard(citation);
+        });
+    }
+    /**
+     * Adds functionality (disable/enable text fields) to checkboxes
+     */
+    private void checkboxFunctionality() {
+        chcbEditor.addActionListener(e -> {
+            txtSurnameEditor.setEditable(chcbEditor.isSelected());
+            txtNameEditor.setEditable(chcbEditor.isSelected());
         });
         rbtnAuthor.addActionListener(e -> {
             txtSurnameWeb.setEditable(true);
